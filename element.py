@@ -15,10 +15,10 @@ class Element:
     
     def player_image(self):
         self.temp=[]
-        for i in range(16,37,20):
+        for i in range(2):
             for j in range(15):
                 p1=pygame.Surface(player_size)
-                p1.blit(self.sheet,(0,0),(6+(21*j),i,player_w,player_h))
+                p1.blit(self.sheet,(0,0),(21*j+6,i*20+16,player_w,player_h))
                 p1=pygame.transform.scale(p1,(player_w*4,player_h*4))
                 self.temp.append(p1)
         

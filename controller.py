@@ -28,7 +28,7 @@ class Controller:
                     self.tile=Tile(self.element,self.level,x,y)
                     self.tile_sprite.add(self.tile)
                 if number=='p':
-                    self.p1=Player(self.element,x,y)
+                    self.p1=Player(self.element,x,y,self.tile_sprite)
                     self.p1_sprite.add(self.p1)
     
     def update(self):
