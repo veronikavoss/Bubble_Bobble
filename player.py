@@ -11,6 +11,8 @@ class Player(pygame.sprite.Sprite):
         self.collide_right=False
         self.collide_ceiling=False
         self.flip=True
+        self.bubble_launched=False
+        self.pressed=False
         
         self.action='standby'
         self.index=0
@@ -23,6 +25,9 @@ class Player(pygame.sprite.Sprite):
         self.gravity=0.6
         
         self.animation_speed=0.1
+    
+    def bubble_launch(self):
+        pass
     
     def key_input(self):
         key_pressed=pygame.key.get_pressed()
@@ -39,6 +44,12 @@ class Player(pygame.sprite.Sprite):
         if key_pressed[pygame.K_UP] and not self.jumped and not self.action=='fall':
             self.dy=self.jump_speed
             self.jumped=True
+        
+        if key_pressed[pygame.K_SPACE]:
+            if not self.pressed:
+                self.pressed=True
+        else:
+            self.pressed=False
         
         self.rect.x+=self.dx
     
@@ -58,7 +69,7 @@ class Player(pygame.sprite.Sprite):
             self.dy=6
         
         for tile in self.tiles:
-            if pygame.sprite.collide_mask(self,tile):
+            if pygame.sprite.collide_rect(self,tile):
                 if self.dy>=0 and self.rect.bottom>=tile.rect.top:
                     self.dy=0
                     self.rect.bottom=tile.rect.top
@@ -74,22 +85,27 @@ class Player(pygame.sprite.Sprite):
             self.collide_ceiling=False
     
     def set_action(self):
-        if self.dy<0:
-            self.action='jump'
-        elif self.dy>1:
-            self.action='fall'
-        elif self.dx!=0:
-            self.action='run'
-            self.animation_speed=0.05
+        if not self.bubble_launched:
+            if self.dy<0:
+                self.action='jump'
+            elif self.dy>1:
+                self.action='fall'
+            elif self.dx!=0:
+                self.action='run'
+                self.animation_speed=0.1
+            else:
+                self.action='standby'
+                self.animation_speed=0.04
         else:
-            self.action='standby'
-            self.animation_speed=0.04
+            self.action='standby_launch'
+            self.animation_speed=0.5
     
     def animation(self):
         animation=self.element.player_images[self.action]
         self.index+=self.animation_speed
         if self.index>=len(animation):
             self.index=0
+            self.bubble_launched=False
         self.image=animation[int(self.index)]
         
         if self.flip:
@@ -105,4 +121,4 @@ class Player(pygame.sprite.Sprite):
         self.set_action()
         self.animation()
         
-        print(self.action,self.collide_left,self.collide_right,self.collide_ceiling,self.dy)
+        print(self.action,self.bubble_launched,self.pressed)

@@ -10,8 +10,18 @@ class Element:
         self.sheet=pygame.image.load(os.path.join(image_path,'Bubble Bobble - General Sprites_fixed.png')).convert_alpha()
         self.tile_sheet=pygame.image.load(os.path.join(image_path,'Bubble Bobble - Level Tiles.png')).convert_alpha()
         
-        self.player_image()
         self.tile_image()
+        self.player_image()
+        self.bubble_image()
+    
+    def tile_image(self):
+        self.tile=[]
+        for c in range(4):
+            for r in range(25):
+                t=pygame.Surface(tile_size)
+                t.blit(self.tile_sheet,(0,0),(c*48+32+7,r*19+26,tile_w,tile_h))
+                t=pygame.transform.scale2x(t)
+                self.tile.append(t)
     
     def player_image(self):
         self.temp=[]
@@ -24,17 +34,26 @@ class Element:
         
         self.player_images={
             'standby':self.temp[:3:2],
+            'standby_launch':self.temp[8:10],
             'run':self.temp[:5],
             'water':self.temp[6:7],
             'jump':self.temp[26:27],
             'fall':self.temp[24:25]
         }
     
-    def tile_image(self):
-        self.tile=[]
-        for c in range(4):
-            for r in range(25):
-                t=pygame.Surface(player_size)
-                t.blit(self.tile_sheet,(0,0),(c*48+32+7,r*19+26,player_w,player_h))
-                t=pygame.transform.scale2x(t)
-                self.tile.append(t)
+    def bubble_image(self):
+        self.bubbles={
+            'launch_g':[],
+            'bubble_g':[]
+        }
+        for i in range(6):
+            b=pygame.Surface(bubble_size)
+            b.blit(self.sheet,(0,0),(5+i*18,1050,bubble_w,bubble_h))
+            b=pygame.transform.scale2x(b)
+            self.bubbles['launch_g'].append(b)
+        
+        for i in range(3):
+            b=pygame.Surface(bubble_size)
+            b.blit(self.sheet,(0,0),(6+i*18,1072,bubble_w,bubble_h))
+            b=pygame.transform.scale2x(b)
+            self.bubbles['bubble_g'].append(b)

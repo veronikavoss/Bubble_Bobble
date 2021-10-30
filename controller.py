@@ -3,6 +3,7 @@ from setting import *
 from element import *
 from tile import *
 from player import *
+from bubble import *
 #%%
 class Controller:
     def __init__(self,screen):
@@ -13,6 +14,9 @@ class Controller:
         self.element=Element()
         self.tile_sprite=pygame.sprite.Group()
         self.p1_sprite=pygame.sprite.GroupSingle()
+        self.bubble=Bubble(self.element)
+        # self.bubble=Bubble(self.element,self.p1_sprite,self.p1.bubble_launched)
+        self.bubble_sprite=pygame.sprite.Group(self.bubble)
         
         self.create_tile()
     
@@ -32,9 +36,11 @@ class Controller:
                     self.p1_sprite.add(self.p1)
     
     def update(self):
+        self.bubble_sprite.update()
         self.p1_sprite.update()
     
     def draw(self):
         self.screen.fill('black')
         self.tile_sprite.draw(self.screen)
         self.p1_sprite.draw(self.screen)
+        self.bubble_sprite.draw(self.screen)

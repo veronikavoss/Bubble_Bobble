@@ -8,8 +8,8 @@ RED=pygame.color.THECOLORS["red"]
 GREEN=pygame.color.THECOLORS["green"]
 BLUE=pygame.color.THECOLORS["blue"]
 YELLOW=pygame.color.THECOLORS["yellow"]
-SCREEN_WIDTH=640
-SCREEN_HEIGHT=480
+SCREEN_WIDTH=1280
+SCREEN_HEIGHT=960
 HALF_SCREEN_WIDTH=int(SCREEN_WIDTH/2)
 HALF_SCREEN_HEIGHT=int(SCREEN_HEIGHT/2)
 SPRITE_FILE_NAME = "sprite_info.spr"
@@ -778,7 +778,7 @@ def main():
     pygame.init()
 
     #Open Pygame window
-    screen = pygame.display.set_mode((640, 480),) #add RESIZABLE or FULLSCREEN
+    screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT),) #add RESIZABLE or FULLSCREEN
     #Title
     pygame.display.set_caption("Sprite Captor")
     #clock

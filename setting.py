@@ -7,3 +7,4 @@ FPS=60
 
 tile_size=tile_w,tile_h=16,16
 player_size=player_w,player_h=16,16
+bubble_size=bubble_w,bubble_h=16,16
