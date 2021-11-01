@@ -1,7 +1,7 @@
 #%%
 from setting import *
 #%%
-class Element:
+class Assets:
     def __init__(self):
         current_path=os.path.dirname(os.path.abspath(__file__))
         image_path=os.path.join(current_path,'image')
@@ -34,7 +34,7 @@ class Element:
         
         self.player_images={
             'standby':self.temp[:3:2],
-            'standby_launch':self.temp[8:10],
+            'standby_launch':self.temp[9:10],
             'run':self.temp[:5],
             'water':self.temp[6:7],
             'jump':self.temp[26:27],
@@ -49,11 +49,11 @@ class Element:
         for i in range(6):
             b=pygame.Surface(bubble_size)
             b.blit(self.sheet,(0,0),(5+i*18,1050,bubble_w,bubble_h))
-            b=pygame.transform.scale2x(b)
+            b=pygame.transform.scale(b,(bubble_w*4,bubble_h*4))
             self.bubbles['launch_g'].append(b)
         
         for i in range(3):
             b=pygame.Surface(bubble_size)
             b.blit(self.sheet,(0,0),(6+i*18,1072,bubble_w,bubble_h))
-            b=pygame.transform.scale2x(b)
+            b=pygame.transform.scale(b,(bubble_w*4,bubble_h*4))
             self.bubbles['bubble_g'].append(b)

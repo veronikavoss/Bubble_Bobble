@@ -2,10 +2,10 @@
 from setting import *
 #%%
 class Player(pygame.sprite.Sprite):
-    def __init__(self,element,x,y,tiles):
+    def __init__(self,asset,x,y,tiles):
         super().__init__()
         self.tiles=tiles
-        self.element=element
+        self.asset=asset
         self.jumped=False
         self.collide_left=False
         self.collide_right=False
@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         
         self.action='standby'
         self.index=0
-        self.image=self.element.player_images[self.action][self.index]
+        self.image=self.asset.player_images[self.action][self.index]
         self.rect=self.image.get_rect(x=x*2,y=y*2-32)
         self.direction=pygame.math.Vector2(0,0)
         self.dx,self.dy=self.direction.x,self.direction.y
@@ -46,8 +46,9 @@ class Player(pygame.sprite.Sprite):
             self.jumped=True
         
         if key_pressed[pygame.K_SPACE]:
-            if not self.pressed:
+            if not self.pressed and not self.bubble_launched:
                 self.pressed=True
+                self.bubble_launched=True
         else:
             self.pressed=False
         
@@ -98,14 +99,15 @@ class Player(pygame.sprite.Sprite):
                 self.animation_speed=0.04
         else:
             self.action='standby_launch'
-            self.animation_speed=0.5
+            # self.animation_speed=0.05
     
     def animation(self):
-        animation=self.element.player_images[self.action]
+        animation=self.asset.player_images[self.action]
         self.index+=self.animation_speed
         if self.index>=len(animation):
             self.index=0
-            self.bubble_launched=False
+            if self.bubble_launched:
+                self.bubble_launched=False
         self.image=animation[int(self.index)]
         
         if self.flip:
@@ -121,4 +123,5 @@ class Player(pygame.sprite.Sprite):
         self.set_action()
         self.animation()
         
-        print(self.action,self.bubble_launched,self.pressed)
+        # print(self.action)
+        print(self.bubble_launched)

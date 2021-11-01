@@ -1,6 +1,6 @@
 #%%
 from setting import *
-from element import *
+from asset import *
 from tile import *
 from player import *
 from bubble import *
@@ -11,14 +11,14 @@ class Controller:
         
         self.level=1
         
-        self.element=Element()
+        self.asset=Assets()
         self.tile_sprite=pygame.sprite.Group()
         self.p1_sprite=pygame.sprite.GroupSingle()
-        self.bubble=Bubble(self.element)
-        # self.bubble=Bubble(self.element,self.p1_sprite,self.p1.bubble_launched)
-        self.bubble_sprite=pygame.sprite.Group(self.bubble)
-        
         self.create_tile()
+        # self.bubble=Bubble(self.element,self.p1)
+        self.bubble_sprite=pygame.sprite.GroupSingle()
+        self.bubble=Bubble(self.asset,self.p1)
+        self.bubble_sprite.add(self.bubble)
     
     def create_tile(self):
         with open('map.csv','r') as r:
@@ -29,10 +29,10 @@ class Controller:
                 x=column_index*tile_w
                 y=row*tile_h+36
                 if number==str(self.level):
-                    self.tile=Tile(self.element,self.level,x,y)
+                    self.tile=Tile(self.asset,self.level,x,y)
                     self.tile_sprite.add(self.tile)
                 if number=='p':
-                    self.p1=Player(self.element,x,y,self.tile_sprite)
+                    self.p1=Player(self.asset,x,y,self.tile_sprite)
                     self.p1_sprite.add(self.p1)
     
     def update(self):
@@ -42,5 +42,6 @@ class Controller:
     def draw(self):
         self.screen.fill('black')
         self.tile_sprite.draw(self.screen)
-        self.p1_sprite.draw(self.screen)
         self.bubble_sprite.draw(self.screen)
+        self.p1_sprite.draw(self.screen)
+        
