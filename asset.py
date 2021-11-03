@@ -25,30 +25,37 @@ class Assets:
                 self.tile.append(t)
     
     def player_image(self):
-        self.temp=[]
+        temp=[]
         for i in range(2):
             for j in range(15):
                 p1=pygame.Surface(player_size)
                 p1.blit(self.sheet,(0,0),(21*j+6,i*20+16,player_w,player_h))
                 p1=pygame.transform.scale(p1,(player_w*4,player_h*4))
-                self.temp.append(p1)
+                p1.set_colorkey((15,79,174))
+                temp.append(p1)
         
         self.player_images={
-            'standby':self.temp[:3:2],
-            'bubble_launch':self.temp[9:10],
-            'run':self.temp[:5],
-            'water':self.temp[6:7],
-            'jump':self.temp[26:27],
-            'fall':self.temp[24:25]
+            'standby':temp[:3:2],
+            'bubble_launch':temp[9:10],
+            'run':temp[:5],
+            'water':temp[6:7],
+            'jump':temp[26:27],
+            'fall':temp[24:25]
         }
     
     def enemy_image(self):
-        self.temp=[]
+        temp=[]
         for i in range(32):
             e1=pygame.Surface(player_size)
             e1.blit(self.sheet,(0,0),(19*i+5,245,player_w,player_h))
             e1=pygame.transform.scale(e1,(player_w*4,player_h*4))
-            self.temp.append(e1)
+            e1.set_colorkey((15,79,174))
+            temp.append(e1)
+        
+        self.zen_chan={
+            'normal':[temp[:4]],
+            'angry':[temp[5:9]]
+        }
     
     def bubble_image(self):
         self.bubbles={
@@ -59,10 +66,12 @@ class Assets:
             b=pygame.Surface(bubble_size)
             b.blit(self.sheet,(0,0),(5+i*18,1050,bubble_w,bubble_h))
             b=pygame.transform.scale(b,(bubble_w*4,bubble_h*4))
+            b.set_colorkey((15,79,174))
             self.bubbles['launch_g'].append(b)
         
         for i in range(3):
             b=pygame.Surface(bubble_size)
             b.blit(self.sheet,(0,0),(6+i*18,1072,bubble_w,bubble_h))
             b=pygame.transform.scale(b,(bubble_w*4,bubble_h*4))
+            b.set_colorkey((15,79,174))
             self.bubbles['bubble_g'].append(b)

@@ -13,6 +13,7 @@ class Controller:
         
         self.asset=Assets()
         self.tile_sprite=pygame.sprite.Group()
+        self.bubble_sprite=pygame.sprite.Group()
         self.p1_sprite=pygame.sprite.GroupSingle()
         self.create_tile()
     
@@ -28,15 +29,17 @@ class Controller:
                     self.tile=Tile(self.asset,self.level,x,y)
                     self.tile_sprite.add(self.tile)
                 if number=='p':
-                    self.p1=Player(self.asset,x,y,self.tile_sprite)
+                    self.p1=Player(self.asset,x,y,self.tile_sprite,self.bubble_sprite)
                     self.p1_sprite.add(self.p1)
     
     def update(self):
+        self.p1_sprite.sprite.bubble_launch_sprite.update()
         self.p1_sprite.sprite.bubble_sprite.update()
         self.p1_sprite.update()
     
     def draw(self):
         self.screen.fill('black')
         self.tile_sprite.draw(self.screen)
+        self.p1_sprite.sprite.bubble_launch_sprite.draw(self.screen)
         self.p1_sprite.sprite.bubble_sprite.draw(self.screen)
         self.p1_sprite.draw(self.screen)

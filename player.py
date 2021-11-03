@@ -3,11 +3,12 @@ from setting import *
 from bubble import *
 #%%
 class Player(pygame.sprite.Sprite):
-    def __init__(self,asset,x,y,tiles):
+    def __init__(self,asset,x,y,tiles,sprite):
         super().__init__()
         self.tiles=tiles
         self.asset=asset
-        self.bubble_sprite=pygame.sprite.Group()
+        self.bubble_sprite=sprite
+        self.bubble_launch_sprite=pygame.sprite.Group()
         
         self.jumped=False
         self.collide_left=False
@@ -32,7 +33,8 @@ class Player(pygame.sprite.Sprite):
         self.bubble_launch_update=0
     
     def bubble_launch(self):
-        self.bubble_sprite.add(Bubble_Launch(self.asset,self.rect.center,self.flip))
+        self.bubble_launch_sprite.add(Bubble_Launch(self.asset,self.rect.center,self.flip,self.bubble_sprite,self.tiles))
+        self.bubble_launched=True
         self.bubble_launch_update=pygame.time.get_ticks()
     
     def bubble_launch_colldown(self):
@@ -59,11 +61,10 @@ class Player(pygame.sprite.Sprite):
         
         if key_pressed[pygame.K_SPACE] and not self.bubble_launched:
             self.bubble_launch()
-            self.bubble_launched=True
         
         self.rect.x+=self.dx
     
-    def collision(self):
+    def collision_tile(self):
         for tile in self.tiles:
             if pygame.sprite.collide_rect(self,tile):
                 if self.dx<0:
@@ -120,15 +121,12 @@ class Player(pygame.sprite.Sprite):
         else:
             self.image=pygame.transform.flip(self.image,False,False)
         self.index+=self.animation_speed
-        
-        self.image.set_colorkey((15,79,174))
     
     def update(self):
         self.key_input()
         self.bubble_launch_colldown()
-        self.collision()
+        self.collision_tile()
         self.set_action()
         self.animation()
         
         # print(self.action)
-        # print(self.bubble_launched)
