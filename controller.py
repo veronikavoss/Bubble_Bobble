@@ -15,10 +15,6 @@ class Controller:
         self.tile_sprite=pygame.sprite.Group()
         self.p1_sprite=pygame.sprite.GroupSingle()
         self.create_tile()
-        # self.bubble=Bubble(self.element,self.p1)
-        self.bubble_sprite=pygame.sprite.GroupSingle()
-        self.bubble=Bubble(self.asset,self.p1)
-        self.bubble_sprite.add(self.bubble)
     
     def create_tile(self):
         with open('map.csv','r') as r:
@@ -36,12 +32,11 @@ class Controller:
                     self.p1_sprite.add(self.p1)
     
     def update(self):
-        self.bubble_sprite.update()
+        self.p1_sprite.sprite.bubble_sprite.update()
         self.p1_sprite.update()
     
     def draw(self):
         self.screen.fill('black')
         self.tile_sprite.draw(self.screen)
-        self.bubble_sprite.draw(self.screen)
+        self.p1_sprite.sprite.bubble_sprite.draw(self.screen)
         self.p1_sprite.draw(self.screen)
-        

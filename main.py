@@ -29,9 +29,6 @@ class Game:
             if event.type==pygame.QUIT:
                 self.playing=False
                 break
-            if event.type==pygame.KEYUP:
-                if event.key==pygame.K_SPACE:
-                    self.controller.p1.bubble_launched=True
     
     def update(self):
         self.controller.update()

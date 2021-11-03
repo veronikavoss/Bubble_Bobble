@@ -12,6 +12,7 @@ class Assets:
         
         self.tile_image()
         self.player_image()
+        self.enemy_image()
         self.bubble_image()
     
     def tile_image(self):
@@ -34,12 +35,20 @@ class Assets:
         
         self.player_images={
             'standby':self.temp[:3:2],
-            'standby_launch':self.temp[9:10],
+            'bubble_launch':self.temp[9:10],
             'run':self.temp[:5],
             'water':self.temp[6:7],
             'jump':self.temp[26:27],
             'fall':self.temp[24:25]
         }
+    
+    def enemy_image(self):
+        self.temp=[]
+        for i in range(32):
+            e1=pygame.Surface(player_size)
+            e1.blit(self.sheet,(0,0),(19*i+5,245,player_w,player_h))
+            e1=pygame.transform.scale(e1,(player_w*4,player_h*4))
+            self.temp.append(e1)
     
     def bubble_image(self):
         self.bubbles={
